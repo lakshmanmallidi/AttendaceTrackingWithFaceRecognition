@@ -5,7 +5,7 @@ import warnings
 class FaceRecognition:   
     def __init__(self, FaceRecognizerModelPath, FaceDetectorModelPath):
         if(os.path.isfile(FaceDetectorModelPath)):
-            self.__FaceRecognizer = cv2.face.LBPHFaceRecognizer_create()
+            self.__FaceRecognizer = None
             self.__FaceDetector = cv2.CascadeClassifier(FaceDetectorModelPath)
             self.__FaceRecognizerModelPath = FaceRecognizerModelPath
             if(os.path.isfile(FaceRecognizerModelPath)):
@@ -22,6 +22,8 @@ class FaceRecognition:
         self.__FaceRecognizer.save(self.__FaceRecognizerModelPath)
     
     def load(self):
+        del(self.__FaceRecognizer)
+        self.__FaceRecognizer = cv2.face.LBPHFaceRecognizer_create()
         self.__FaceRecognizer.read(self.__FaceRecognizerModelPath)
     
     def TrainUser(self, FolderPath, UserId):
@@ -65,7 +67,7 @@ class FaceRecognition:
                 warning.warn("Improper Image format: "+path)
         self.__FaceRecognizer.train(Cv2Images,np.array(Labels))
         self.save()
-        self.load()
+        #self.load()
         
     def PredictUsers(self, Frame):
         Faces = self.__FaceDetector.detectMultiScale(Frame, 1.3, 5)
