@@ -30,10 +30,10 @@ def trainNewUsers():
     rows = db.getNewEmployeeImageDir()
     print(rows)
 
-db = DbOperations("attendancemanagementsystem")
+db = DbOperations.DbOperations("attendancemanagementsystem")
 isRunning = True
 thresholdAccuracy = 80
-RecognitionObj = FaceRecognition.FaceRecognition("Models/FaceRecognition.xml","Models/haarcascade_frontalface_default.xml")
+RecognitionObj = FaceRecognition.FaceRecognition("Models/haarcascade_frontalface_default.xml","Models/FaceRecognition.xml")
 threading.Thread(target=main,args=("http://192.168.43.99/cgi-bin/snapshot.cgi","admin","mycamera2")).start()
 threading.Thread(target=main,args=("http://192.168.43.98/cgi-bin/snapshot.cgi","admin","mycamera1")).start()
 root = tk.Tk()
@@ -42,3 +42,44 @@ root.resizable(0, 0)
 ButtonTrain = tk.Button(root,text="Train",command=trainNewUsers)
 ButtonTrain.grid(row=0,column=0,sticky=tk.W+tk.N+tk.S+tk.E)
 root.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

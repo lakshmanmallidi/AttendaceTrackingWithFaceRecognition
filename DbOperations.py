@@ -7,7 +7,6 @@ class DbOperations:
         try:
             conn = DbConnector.connect(host="localhost",
                                        user="root",
-                                       password="mydatabase123!",
                                        database = self.__databaseName)
             cur = conn.cursor()
             cur.execute(query)
@@ -16,17 +15,16 @@ class DbOperations:
         except DbConnector.Error as e:
             print(e)
             
-    def insert(self, query):
+    def get(self, query):
         rows=None
         try:
             conn = DbConnector.connect(host="localhost",
                                        user="root",
-                                       password="mydatabase123!",
                                        database = self.__databaseName)
             cur = conn.cursor()
             cur.execute(query)
-            columns = [col[0] for col in cursor.description]
-            rows = [dict(zip(columns, row)) for row in cursor.fetchall()] 
+            columns = [col[0] for col in cur.description]
+            rows = [dict(zip(columns, row)) for row in cur.fetchall()] 
             conn.close()
         except DbConnector.Error as e:
             print(e)
@@ -35,7 +33,7 @@ class DbOperations:
     def insertOutTime(self,Id):
         query = '''
                 UPDATE usersattendance 
-                SET    outtime = ( CURRENT_TIME ) 
+                SET    outtime = CURRENT_TIMESTAMP 
                 WHERE  id = {0}
                        AND datecol = (SELECT Max(datecol) 
                                       FROM   (SELECT * 
@@ -50,7 +48,7 @@ class DbOperations:
                                                                    FROM   usersattendance) AS 
                                                                   vt3 
                                                            WHERE  id = {0})) 
-                       AND outtime IS NULL 
+                       AND outtime='0000-00-00 00:00:00'
                 '''
         query = query.format(Id)
         self.insert(query)

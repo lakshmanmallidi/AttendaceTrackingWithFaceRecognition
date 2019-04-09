@@ -3,7 +3,7 @@ import os
 import numpy as np
 import warnings
 class FaceRecognition:   
-    def __init__(self, FaceRecognizerModelPath, FaceDetectorModelPath):
+    def __init__(self,FaceDetectorModelPath,FaceRecognizerModelPath=""):
         if(os.path.isfile(FaceDetectorModelPath)):
             self.__FaceRecognizer = None
             self.__FaceDetector = cv2.CascadeClassifier(FaceDetectorModelPath)
@@ -11,9 +11,7 @@ class FaceRecognition:
             if(os.path.isfile(FaceRecognizerModelPath)):
                 self.load()
             elif(FaceRecognizerModelPath != ""):
-                self.save()
-            else:
-                self.__FaceRecognizerModelPath = "Models/FaceRecognition.xml"
+                self.__FaceRecognizer = cv2.face.LBPHFaceRecognizer_create()
                 self.save()
         else:
             raise Exception('No FaceDetectorModel exists')
