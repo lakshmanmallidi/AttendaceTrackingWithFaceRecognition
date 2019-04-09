@@ -39,11 +39,11 @@ class DbOperations:
         query = '''
                 UPDATE usersattendance 
                 SET    outtime = CURRENT_TIMESTAMP 
-                WHERE  id = {0}
+                WHERE  userId = {0}
                 AND InTime = (SELECT MAX(InTime) 
                                FROM   (SELECT * 
                                        FROM   usersattendance) AS vt
-                               WHERE  id = {0}) 
+                               WHERE  userId = {0}) 
                 AND OutTime='0000-00-00 00:00:00'
                 '''
         query = query.format(Id)
@@ -54,6 +54,6 @@ class DbOperations:
         self.insert(query)
 
     def getNewEmployeeImageDir(self):
-        query = "SELECT ImageDirectory FROM users where CreatedOn >(SELECT lasttrainedat from lasttrained)"
+        query = "SELECT Id,ImageDirectory FROM users where CreatedOn >(SELECT lasttrainedat from lasttrained)"
         rows = self.get(query)
         return rows

@@ -1,4 +1,6 @@
 import mysql.connector as DbConnector
+from time import sleep
+
 CreateUsersTable = '''
 CREATE TABLE users(
 Id INT PRIMARY KEY AUTO_INCREMENT,
@@ -13,9 +15,10 @@ Role VARCHAR(30),
 IsAdmin varchar(1) NOT NULL,
 ImageDirectory VARCHAR(200) NOT NULL,
 UserProfile VARCHAR(120) NOT NULL,
-CreatedOn DATETIME NOT NULL
+CreatedOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 '''
+
 CreateUsersAttendanceTable = '''
 CREATE TABLE usersattendance(
 Id INT PRIMARY KEY AUTO_INCREMENT,
@@ -36,11 +39,11 @@ INSERT INTO lasttrained() values()
 '''
 InsertAdminUsers = '''
 INSERT INTO
-users(FullName,Email,PhoneNumber,Address,UserName,
+users(FullName,Email,PhoneNumber,Address,
       Salary,Role,IsAdmin,ImageDirectory,UserProfile,
       CreatedOn)
 VALUES('Sai krishna','saisiddu365@gmail.com','9493476964',
-'OYO ROOMS Hyderabad-533234', 'sai siddu',80000,'AssistantSoftware',
+'OYO ROOMS Hyderabad-533234',80000,'AssistantSoftware',
 'Y','Images/Admin','images/admin.jpg',CURRENT_TIMESTAMP)
 '''
 conn = DbConnector.connect(host="localhost", user="root")
@@ -52,8 +55,10 @@ try:
     cur.execute(CreateUsersTable)
     cur.execute(CreateUsersAttendanceTable)
     cur.execute(CreateLastTrainedDateTimeTable)
-    cur.execute(InsertAdminUsers)
     cur.execute(InsertDefaultLastTrainedDateTime)
+    sleep(2)
+    cur.execute(InsertAdminUsers)
+   
 except DbConnector.Error as e:
     print(e)
 finally:

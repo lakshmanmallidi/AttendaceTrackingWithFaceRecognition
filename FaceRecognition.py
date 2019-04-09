@@ -62,7 +62,7 @@ class FaceRecognition:
                     ResizedImg=cv2.resize(ROI_gray,(128,128))
                     Cv2Images.append(ResizedImg)
             except Exception as e:
-                warning.warn("Improper Image format: "+path)
+                warnings.warn("Improper Image format: "+path)
         self.__FaceRecognizer.train(Cv2Images,np.array(Labels))
         self.save()
         #self.load()
