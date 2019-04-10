@@ -4,17 +4,10 @@ from time import sleep
 CreateUsersTable = '''
 CREATE TABLE users(
 Id INT PRIMARY KEY AUTO_INCREMENT,
-FullName VARCHAR(50) NOT NULL,
-Email VARCHAR(75) NOT NULL,
-PhoneNumber VARCHAR(15),
-Address VARCHAR(200),
-UserName VARCHAR(25) NOT NULL,
-Password VARCHAR(50) NOT NULL DEFAULT "e10adc3949ba59abbe56e057f20f883e",
-Salary DOUBLE,
-Role VARCHAR(30),
+UserName VARCHAR(15) NOT NULL,
+Password VARCHAR(20) NOT NULL DEFAULT "e10adc3949ba59abbe56e057f20f883e",
 IsAdmin varchar(1) NOT NULL,
-ImageDirectory VARCHAR(200) NOT NULL,
-UserProfile VARCHAR(120) NOT NULL,
+ImageDirectory VARCHAR(50) NOT NULL,
 CreatedOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 '''
@@ -39,14 +32,10 @@ INSERT INTO lasttrained() values()
 '''
 InsertAdminUsers = '''
 INSERT INTO
-users(FullName,Email,PhoneNumber,Address,
-      Salary,Role,IsAdmin,ImageDirectory,UserProfile,
-      CreatedOn)
-VALUES('Sai krishna','saisiddu365@gmail.com','9493476964',
-'OYO ROOMS Hyderabad-533234',80000,'AssistantSoftware',
-'Y','Images/Admin','images/admin.jpg',CURRENT_TIMESTAMP)
+users(UserName,IsAdmin,ImageDirectory,CreatedOn)
+VALUES('admin','Y','Images/Admin',CURRENT_TIMESTAMP)
 '''
-conn = DbConnector.connect(host="localhost", user="root")
+conn = DbConnector.connect(host="localhost", user="root", password="mydatabase123!")
 try:
     cur = conn.cursor()
     cur.execute('DROP DATABASE IF EXISTS attendancemanagementsystem')
